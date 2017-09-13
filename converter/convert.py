@@ -3,8 +3,6 @@ import sys
 import os
 
 shortcut_regex = r"^\\d"
-# TODO : definitions
-# TODO : lists
 
 def main():
     path_to_file = sys.argv[1]
