@@ -1,3 +1,5 @@
-*/main.aux
-*/main.log
-*/build
+*main.aux
+*main.log
+*main.pdf
+*build
+*.DS_Store
