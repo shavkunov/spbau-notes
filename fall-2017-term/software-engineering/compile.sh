@@ -1,3 +1,4 @@
+
 !#/bin/bash
 
 #compile hw into tex
@@ -10,5 +11,5 @@ done
 cd ../
 
 #compile whole conspect
-pdflatex main.tex
-open main.pdf
+pdflatex software-engineering.tex
+open software-engineering.pdf
