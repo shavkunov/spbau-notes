@@ -4,17 +4,22 @@ import os
 
 shortcut_regex = r"^\\d"
 
-def transform_fractions(string):
+
+def transform_grouping_regex(string):
     # transform my fractions into tex fraction
     # this is work if fraction on one line
-    pattern = re.compile(r"@([^][]*?)/([^][]*?)@")
-    compiled = pattern.sub(r"\\frac{\1}{\2}", string) # better for further tex expressions
-    return compiled
+    fraction_pattern = re.compile(r"@(.*?)/(.*?)@")
+    compiled = fraction_pattern.sub(r"\\frac{\1}{\2}", string) # better for further tex expressions
 
+    sum_pattern = re.compile(r"\\sum from (.*) to (.*?) ")
+    compiled = sum_pattern.sub(r"\\sum \\limits_{\1}^{\2} ", compiled)
 
-def transform_sums(string):
-    pattern = re.compile(r"\\sum from (.*) to (.*?) ")
-    compiled = pattern.sub(r"\\sum \\limits_{\1}^{\2} ", string)
+    overset_pattern = re.compile(r"\\over{(.*?)} ")
+    compiled = overset_pattern.sub(r"\\overset{\\text{\1}} ", compiled)
+
+    underset_pattern = re.compile(r"\\under{(.*?)} ")
+    compiled = underset_pattern.sub(r"\\underset{\\text{\1}} ", compiled)
+
     return compiled
 
 
@@ -42,8 +47,7 @@ def main():
     with open(output, "w") as dest:
         with open(path_to_file, "rt") as source:
             for line in source.readlines():
-                line = transform_fractions(line)
-                line = transform_sums(line)
+                line = transform_grouping_regex(line)
 
                 if line.startswith(" "):
                     spaces = re.match(r"\s*", line).group()
@@ -54,7 +58,7 @@ def main():
                     short = parts[0]
                     value = parts[-1].replace("\n", "")
 
-                    replace_data[short] = transform_fractions(value)
+                    replace_data[short] = transform_grouping_regex(value)
                     line = ''
                 elif line.startswith("#"):
                     parts = line.split(" ", 1)
