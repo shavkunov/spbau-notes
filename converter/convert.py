@@ -8,7 +8,7 @@ def transform_fractions(string):
     # transform my fractions into tex fraction
     # this is work if fraction on one line
     pattern = re.compile(r"@([^][]*?)/([^][]*?)@")
-    compiled = pattern.sub(r"\\frac{\1}{\2}", string)
+    compiled = pattern.sub(r"\\frac{\1}{\2}", string) # better for further tex expressions
     return compiled
 
 
@@ -21,19 +21,20 @@ def main():
     #output = filename + ".tex"
     replace_data = {}
 
-    replace_data[r" \*"] = r" \\cdot "
+    replace_data[r" *"] = r" \cdot "
     replace_data[r"~"] = r"\sim "
     replace_data[r"~~"] = r"\approx "
     replace_data[r"..."] = r"\dots "
     replace_data[r"!="] = r"\neq "
     replace_data[r">="] = r"\ge "
     replace_data[r"<="] = r"\le "
-    replace_data[r"->"] = r" \rightarrow "
+    replace_data[r"—>"] = r" \rightarrow "
+    replace_data[r"->"] = r" \rightarrow " # don't ask me about that
     replace_data[r"=>"] = r" \Rightarrow "
     replace_data[r"<=>"] = r" \Leftrightarrow "
 
     with open(output, "w") as dest:
-        with open(path_to_file, "r") as source:
+        with open(path_to_file, "rt") as source:
             for line in source.readlines():
                 line = transform_fractions(line)
 
