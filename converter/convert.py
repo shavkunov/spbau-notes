@@ -12,6 +12,12 @@ def transform_fractions(string):
     return compiled
 
 
+def transform_sums(string):
+    pattern = re.compile(r"\\sum from (.*) to (.*?) ")
+    compiled = pattern.sub(r"\\sum \\limits_{\1}^{\2} ", string)
+    return compiled
+
+
 def main():
     path_to_file = sys.argv[1]
     filename, file_extension = os.path.splitext(path_to_file)
@@ -37,6 +43,7 @@ def main():
         with open(path_to_file, "rt") as source:
             for line in source.readlines():
                 line = transform_fractions(line)
+                line = transform_sums(line)
 
                 if line.startswith(" "):
                     spaces = re.match(r"\s*", line).group()
