@@ -44,12 +44,16 @@ def main():
     replace_data[r"=>"] = r" \Rightarrow "
     replace_data[r"<=>"] = r" \Leftrightarrow "
 
+    begin_section = False
     with open(output, "w") as dest:
         with open(path_to_file, "rt") as source:
             for line in source.readlines():
                 line = transform_grouping_regex(line)
 
-                if line.startswith(" "):
+                if line.startswith("\\begin{") and not begin_section:
+                    begin_section = True
+
+                if line.startswith(" ") and not begin_section:
                     spaces = re.match(r"\s*", line).group()
                     line = line.replace(spaces, "")
                     line = r"\indent " + line + r"\\"
@@ -75,7 +79,11 @@ def main():
                     if length == 3:
                         line = r"\subsubsection*{" + header + r'}' + '\n'
                 else:
-                    line = r"\noindent " + line.replace('\n', '') + r' \\' + '\n'
+                    if not begin_section:
+                        line = r"\noindent " + line.replace('\n', '') + r' \\' + '\n'
+
+                if (line.startswith("\\end{")) and begin_section:
+                    begin_section = False
                 dest.write(line)
 
     # Out files are not big
