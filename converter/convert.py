@@ -20,6 +20,32 @@ def transform_grouping_regex(string):
     underset_pattern = re.compile(r"\\under{(.*?)} ")
     compiled = underset_pattern.sub(r"\\underset{\\text{\1}} ", compiled)
 
+    if "\\vb{" in compiled:
+        vbox_pattern = re.compile(r"\\vb{(.*?)}")
+        columns = vbox_pattern.findall(compiled)
+        for column in columns:
+            items = column.split(" ")
+            column_text = r"\\begin{pmatrix}"
+            for item in items:
+                column_text += item + r" \\\\ " # omg
+
+            column_text = column_text[:-2] + "\n"
+            column_text += " \\end{pmatrix}\n"
+            compiled = vbox_pattern.sub(column_text, compiled)
+
+    if "\\hb{" in compiled:
+        hbox_pattern = re.compile(r"\\hb{(.*?)}")
+        columns = hbox_pattern.findall(compiled)
+        for column in columns:
+            items = column.split(" ")
+            column_text = r"\\begin{pmatrix}"
+            for item in items:
+                column_text += item + r" & " # omg
+
+            column_text = column_text[:-2] + "\n"
+            column_text += " \\end{pmatrix}\n"
+            compiled = hbox_pattern.sub(column_text, compiled)            
+
     return compiled
 
 
