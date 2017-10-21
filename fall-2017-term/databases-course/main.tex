@@ -11,13 +11,16 @@
 \usepackage{import}
 \usepackage{listings}
 \usepackage{color}
+\usepackage{graphviz}
+\usepackage{tabularx}
+\usepackage[left=1cm,right=1cm,top=2cm,bottom=2cm]{geometry}
 
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
 \definecolor{mauve}{rgb}{0.58,0,0.82}
 
 \lstset{frame=tb,
-  language=Java,
+  language=C,
   aboveskip=3mm,
   belowskip=3mm,
   showstringspaces=false,
@@ -30,7 +33,10 @@
   stringstyle=\color{mauve},
   breaklines=true,
   breakatwhitespace=true,
-  tabsize=3
+  keepspaces=true,
+  tabsize=3,
+  extendedchars=\true,
+  mathescape=true
 }
 
 % Некоторые множества
@@ -132,5 +138,9 @@
 \input{build/1.tex}
 \input{build/2.tex}
 \input{build/3.tex}
+\input{build/4.tex}
+\input{build/5.tex}
+\input{build/6.tex}
+\input{build/7.tex}
 
 \end{document}

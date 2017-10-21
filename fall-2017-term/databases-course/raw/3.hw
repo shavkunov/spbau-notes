@@ -44,14 +44,14 @@ $S = (b$ INT$)$
 
 $R \under{$a -> a'$} -> R'$ переименование атрибута
 R = \begin{tabular}{c c}
-a & b \\ \hline
-1 & 2 \\
+a & b
+1 & 2
 3 & 4
 \end{tabular}
 
-$R \under{$a -> c$} -> $ \begin{tabular}{c c}
-с & b \\ \hline
-1 & 2 \\
+$R \under{$a \rightarrow c$} \rightarrow $ \begin{tabular}{c c}
+с & b 
+1 & 2
 3 & 4
 \end{tabular}
 
@@ -63,8 +63,8 @@ $\sigma$, SELECT, WHERE
 
 \8 = \theta
 
-$\8$ -- предикат на R
-$\8(t) -> $ true, false
+$\8$ - предикат на R
+$\8(t) --> $ true, false
 Выборка: $\sigma_{\8}(R)$
 $t' \in \sigma_{\8}(R) <=> \exists t \in R: \8(t) = true$, $t' = t$
 
@@ -99,14 +99,13 @@ $(R) \2 (S) != \9$ были общие, равные по именам и тип
 Логическая реализация:
 
 \10 = $X = (R) \2 (S)$
-\11 = $->$
 
 \begin{lstlisting}
 \10
 for r in R:
     for s in S:
         if r[X] = s[X]:
-            (r, s) \11 result
+            (r, s) $-->$ result
 \end{lstlisting}
 
 $R \under{$\theta$} \5 S$ - тета-соединение.
